@@ -6,31 +6,38 @@ namespace Point_of_Sale.Payment_Gateway
 {
     internal class Check: IPayment
     {        
-        public void Payment(double pay) //Make payment using Check
+        public string Payment(double pay) //Make payment using Check
         {
-            Console.WriteLine("Enter Account number:"); // Get Account number
+            // Get Account number
+            Console.WriteLine("Enter Account number:"); 
             string accountNumber = Console.ReadLine();
 
-            Console.WriteLine("Enter Check number:"); // Get Check number
+            // Get Check number
+            Console.WriteLine("Enter Check number:"); 
             string checkNumber = Console.ReadLine();
-            
-            CheckingAccount checking = (CheckingAccount)Bank.GetAccount(accountNumber); // Get the Account details from bank
+
+            // Get the Account details from bank
+            CheckingAccount checking = (CheckingAccount)Bank.GetAccount(accountNumber); 
 
             if (checking != null) //Account is present
             {
                 if (checking.ValidateCheck(checkNumber)) //Check is "check" is valid
                 {
-                    checking.MakePayment(pay); //Make Payment using check
-                    checking.RemoveCheck(checkNumber); // Mark it as procssed
+                    //Make Payment using check & mark it as processed
+                    checking.MakePayment(pay); 
+                    checking.RemoveCheck(checkNumber); 
+                    return $"$ {pay} paid using Account number {string.Concat(["****", accountNumber.Substring(8)])} - {checkNumber}";
                 }
                 else
                 {
-                    throw new InvalidDataException("Check not valid!"); // Invalid check
+                    // Invalid check
+                    throw new InvalidDataException("Check not valid!"); 
                 }
             }
             else
             {
-                throw new InvalidDataException("Check not valid!"); // Account not valid, So is check
+                // Account not valid, So is check
+                throw new InvalidDataException("Account number not valid!"); 
             } 
         }
     }

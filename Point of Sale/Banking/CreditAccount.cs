@@ -32,12 +32,14 @@
         //Function to Pay to Credit Account-- essentially adding balance
         public override void AddBalance(double amount)
         {
-            if (amount > 0) // Add only if amount is greater 
+            if (amount > 0) 
             {
+                //Valid amount add it to credit 
                 CreditLimit += amount;
             }
             else
-            {   //Throw exception if negative amount is paid
+            {   
+                //Throw exception if negative amount is paid
                 throw new InvalidDataException("Can't Add negative balance");
             }
         }
@@ -45,12 +47,14 @@
         //Make Payment from the account
         public override void MakePayment(double amount)
         {
-            if (CreditLimit >= amount) //Check if balance is sufficient
+            if (CreditLimit >= amount)
             {
-                CreditLimit -= amount; //Make payment if yes.
+                //Sufficient balance available, Make payment
+                CreditLimit -= amount; 
             }
             else
-            {   //Insufficient balance throw an exception
+            {  
+                //Insufficient balance throw an exception
                 throw new InvalidDataException("Insufficient Balance!");
             }
         }

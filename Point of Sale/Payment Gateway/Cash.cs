@@ -2,19 +2,20 @@
 
 namespace Point_of_Sale.Payment_Gateway
 {
-    internal static class Cash
+    internal class Cash: IPayment
     {
-        public static double Payment(double pay) //Make Cash payment
+        public string Payment(double pay) //Make Cash payment
         {
             Console.WriteLine("Amount tendered:"); // Ask for Tender
             double amount = double.Parse(Console.ReadLine());
             double change = 0.0;
-            if (amount >= pay) // Is amount sufficient to cover payment?
+            if (amount >= pay) 
             {
-                return amount - pay; //If yes, make payment
+                // sufficient amount to cover payment
+                return $"${(amount - pay).ToString()} returned"; //If yes, make payment
             }
             else
-            {   // Else throw an exception
+            {   // Decline payment
                 throw new InvalidDataException("Amount insufficient!");
             }
         }

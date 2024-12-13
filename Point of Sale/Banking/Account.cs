@@ -5,6 +5,7 @@
     {
         protected string accountHolder { get; set; }
         public string AccountNumber { get; }
+
         public Account(string accountHolder, string accountNumber) //Parameterized constructor
         {
             this.accountHolder = accountHolder;

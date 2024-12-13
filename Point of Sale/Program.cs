@@ -1,4 +1,5 @@
 ﻿using Point_of_Sale.Payment_Gateway;
+using System;
 
 
 
@@ -6,9 +7,9 @@ namespace Point_of_Sale
 {
     public enum paymentMethod
     {
-        cash,
-        check,
-        credit
+        Cash=1,
+        Check,
+        Credit
     }
     internal class Program
     {        
@@ -22,35 +23,46 @@ namespace Point_of_Sale
                 {
                     Console.WriteLine("Enter Amount");
                     double amount = double.Parse(Console.ReadLine());
-
+                   
                     Console.WriteLine("How would you like to pay today?");
-                    Console.WriteLine("\n1. Cash \n2. Check \n3. Credit Card");
-                    int method = int.Parse(Console.ReadLine());
+                    foreach(string name in Enum.GetNames(typeof(paymentMethod)))
+                    {
+                        Console.WriteLine($"{(int)Enum.Parse(typeof(paymentMethod),name)}. {name}");
+                    }
+                   // Console.WriteLine("\n1. Cash \n2. Check \n3. Credit Card");
+                    string method = Console.ReadLine();
                     IPayment iPayment = null;
 
-                    switch (method)
+                    paymentMethod enumvalue;
+
+                    Enum.TryParse(method, out enumvalue);
+
+                    switch ((int)enumvalue)
                     {
                         case 1:
-                            double change = Cash.Payment(amount);
-                            Console.WriteLine($"Here is you change: {change}");
-                            isPaid = true;
+                            iPayment = new Cash();
                             break;
                         case 2:
                             iPayment = new Check();
-                            iPayment.Payment(amount);                            
-                            isPaid = true;
                             break;
                         case 3:
                             iPayment = new CreditCard();
-                            iPayment.Payment(amount);
-                            isPaid = true;
                             break;
                         default:
                             throw new InvalidDataException("Invalid Payment Method!");
                             break;
                     }
-
+                    
+                    string message = iPayment.Payment(amount);
+                    isPaid = true;
                     Console.WriteLine("Payment Accepted!");
+                    Console.WriteLine(message);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine("Transaction Denied!");
+                    Console.WriteLine(ex.Message);
+                    isPaid = false;
                 }
                 catch(Exception ex)
                 {

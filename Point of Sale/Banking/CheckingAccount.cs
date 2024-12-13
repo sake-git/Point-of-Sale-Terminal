@@ -46,10 +46,13 @@
         {
             if (amount > 0)
             {
+                //Valid amount add it to credit 
                 Balance += amount;
             }
             else
             {
+
+                //Throw exception if negative amount is paid
                 throw new InvalidDataException("Can't Add negative balance");
             }
         }
@@ -58,12 +61,14 @@
         //Make Payment from the account
         public override void MakePayment(double amount)
         {
-            if (Balance >= amount) //Check if balance is sufficient
-            {
-                Balance -= amount; //Make payment if yes.
+            if (Balance >= amount)
+            {    
+                //Sufficient balance available, Make payment
+                Balance -= amount; 
             }
             else
-            {   //Insufficient balance throw an exception
+            {   
+                //Insufficient balance throw an exception
                 throw new InvalidDataException("Insufficient Balance!");
             }
         }
