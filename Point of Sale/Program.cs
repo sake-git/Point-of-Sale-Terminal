@@ -1,7 +1,5 @@
-﻿using Point_of_Sale.Payment_Gateway;
-using System;
-
-
+﻿
+using Point_of_Sale.Banking;
 
 namespace Point_of_Sale
 {
@@ -30,43 +28,40 @@ namespace Point_of_Sale
                         Console.WriteLine($"{(int)Enum.Parse(typeof(paymentMethod),name)}. {name}");
                     }
                    // Console.WriteLine("\n1. Cash \n2. Check \n3. Credit Card");
-                    string method = Console.ReadLine();
-                    IPayment iPayment = null;
-
+                    string method = Console.ReadLine(); 
                     paymentMethod enumvalue;
-
                     Enum.TryParse(method, out enumvalue);
+
+                    string message = "";
 
                     switch ((int)enumvalue)
                     {
                         case 1:
-                            iPayment = new Cash();
+                            message = Cash.Payment(amount);
                             break;
                         case 2:
-                            iPayment = new Check();
-                            break;
                         case 3:
-                            iPayment = new CreditCard();
+                            message = Bank.PaymentGateway(amount,(int) enumvalue);
                             break;
+                        
                         default:
                             throw new InvalidDataException("Invalid Payment Method!");
                             break;
                     }
                     
-                    string message = iPayment.Payment(amount);
                     isPaid = true;
                     Console.WriteLine("Payment Accepted!");
                     Console.WriteLine(message);
                 }
                 catch (InvalidOperationException ex)
                 {
-                    Console.WriteLine("Transaction Denied!");
+                    Console.WriteLine("Transaction Decline!");
                     Console.WriteLine(ex.Message);
                     isPaid = false;
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine("Transaction Denied!");
+                    Console.WriteLine("Transaction Declined!");
                     Console.WriteLine(ex.Message);
                     isPaid = false;
                 }

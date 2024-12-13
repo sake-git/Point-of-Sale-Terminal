@@ -1,6 +1,6 @@
 ﻿namespace Point_of_Sale.Banking
 {
-    internal class CheckingAccount : Account //Checking Account, derived from Account base class
+    internal class CheckingAccount : Account, IPayment //Checking Account, derived from Account base class
     {
         public string RoutingNumber { get; }
         public double Balance { get; set; }
@@ -31,14 +31,34 @@
 
 
         //Validate the check number 
-        public bool ValidateCheck(string checkNumber)
+        public override bool ValidateAccount()
         {
+            // Get Check number
+            Console.WriteLine("Enter Check number:");
+            string checkNumber = Console.ReadLine();
+
             string check = checks.Find(x => x == checkNumber);
             if (check != null)
             {
                 return true;
             }
             return false;
+        }
+
+        //Make Payment from the account
+        public override string MakePayment(double amount)
+        {
+            if (Balance >= amount)
+            {    
+                //Sufficient balance available, Make payment
+                Balance -= amount;
+                return $"$ {amount} paid with check for Account {string.Concat(["****", AccountNumber.Substring(8)])}";
+            }
+            else
+            {   
+                //Insufficient balance throw an exception
+                throw new InvalidDataException("Insufficient Balance!");
+            }
         }
 
         //Add Balance to the Account
@@ -54,22 +74,6 @@
 
                 //Throw exception if negative amount is paid
                 throw new InvalidDataException("Can't Add negative balance");
-            }
-        }
-
-
-        //Make Payment from the account
-        public override void MakePayment(double amount)
-        {
-            if (Balance >= amount)
-            {    
-                //Sufficient balance available, Make payment
-                Balance -= amount; 
-            }
-            else
-            {   
-                //Insufficient balance throw an exception
-                throw new InvalidDataException("Insufficient Balance!");
             }
         }
     }

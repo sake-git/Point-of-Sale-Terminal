@@ -1,4 +1,6 @@
-﻿namespace Point_of_Sale.Banking
+﻿using System.ComponentModel.Design;
+
+namespace Point_of_Sale.Banking
 {
     internal class Bank
     {
@@ -15,36 +17,87 @@
         //Get the request Account. 
         public static Account GetAccount(string number)
         {
-            try
+            var accountList = accounts.Where(x =>
             {
-                return accounts.Where(x =>
-                 {
-                     if (x is CreditAccount) 
-                     {
-                         //Object is Credit Account, match with Credit card number
-                         CreditAccount card = (CreditAccount)x;
-                         if (card.CardNumber == number)
-                         {
-                             return true;
-                         }
-                     }
-                     else 
-                     {
-                         // Object is Checking Account, match with Account number
-                         CheckingAccount checking = (CheckingAccount)x;
-                         if (checking.AccountNumber == number)
-                         {
-                             return true;
-                         }
-                     }
-                     return false;
-                 }).First();// Credit card numbers & account numbers are unique. If user finds an account, stop the search.
-            }
-            catch (Exception ex)
+                if (x is CreditAccount)
+                {
+                    //Object is Credit Account, match with Credit card number
+                    CreditAccount card = (CreditAccount)x;
+                    if (card.CardNumber == number)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    // Object is Checking Account, match with Account number
+                    CheckingAccount checking = (CheckingAccount)x;
+                    if (checking.AccountNumber == number)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+            if (accountList.Count() == 0) 
             {
-                return null;
+                throw new Exception("Invalid account");
             }
+            
+            Account account = accountList.First();
+
+
+            if (account.ValidateAccount())
+            {
+                return account;
+            }
+            else
+            {
+                throw new Exception("Invalid Details");
+            }              
            
         }
+
+
+        public static string PaymentGateway(double amount, int method ) //Make payment using Credit Card
+        {
+            Account account = null;
+            string accountId = null;
+            
+            if (method == 2)
+            {
+                // Get Account number
+                Console.WriteLine("Enter Account number:");
+                accountId = Console.ReadLine();
+            }
+            else if(method == 3) 
+            {
+                // Get credit card number
+                Console.WriteLine("Enter Credit Card number:");
+                accountId = Console.ReadLine();
+            }
+            else
+            {
+                throw new InvalidDataException("Invalid Payment Method");
+            }
+
+            // Get the Account details from bank
+            account = GetAccount(accountId);
+            return account.MakePayment(amount);
+
+
+           /* if (account != null) //Account is present
+            {
+                // Make payment
+                           
+                
+            }
+            else
+            {
+                // Account is invalid
+                throw new InvalidDataException("Account not valid!");
+            }*/
+        }        
     }
 }
