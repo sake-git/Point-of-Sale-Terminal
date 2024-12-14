@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Point_of_Sale.Banking
 {
@@ -13,6 +14,12 @@ namespace Point_of_Sale.Banking
             new CheckingAccount("Jeremy Doe","000010000104","123456789",300),
             new CheckingAccount("Jelena Doe","000010000105","123456789",250)
         };
+
+        public Bank()
+        {
+            
+
+        }
 
         //Get the request Account. 
         public static Account GetAccount(string number)
@@ -84,20 +91,7 @@ namespace Point_of_Sale.Banking
 
             // Get the Account details from bank
             account = GetAccount(accountId);
-            return account.MakePayment(amount);
-
-
-           /* if (account != null) //Account is present
-            {
-                // Make payment
-                           
-                
-            }
-            else
-            {
-                // Account is invalid
-                throw new InvalidDataException("Account not valid!");
-            }*/
+            return account.MakePayment(amount);           
         }        
     }
 }

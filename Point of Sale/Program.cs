@@ -1,5 +1,6 @@
 ﻿
 using Point_of_Sale.Banking;
+using Point_of_Sale.ErrorLogging;
 
 namespace Point_of_Sale
 {
@@ -15,6 +16,7 @@ namespace Point_of_Sale
         {
             bool isPaid = false;
             string input;
+            FileOperations.ReadProductsFromFile("Product.txt");
             do
             {
                 try
@@ -52,22 +54,18 @@ namespace Point_of_Sale
                     isPaid = true;
                     Console.WriteLine("Payment Accepted!");
                     Console.WriteLine(message);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    Console.WriteLine("Transaction Decline!");
-                    Console.WriteLine(ex.Message);
-                    isPaid = false;
-                }
+                }                
                 catch(Exception ex)
                 {
                     Console.WriteLine("Transaction Declined!");
-                    Console.WriteLine(ex.Message);
+                    Logger.LogError(ex.Message);
                     isPaid = false;
                 }
                 Console.WriteLine("Would you like to continue? (y/n)");               
                 input = Console.ReadLine();
             }while (input.ToLower() == "y");
+
+            FileOperations.SaveProductsToFile("Product.txt");
         }
     }
 }
