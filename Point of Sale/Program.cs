@@ -14,6 +14,7 @@ namespace Point_of_Sale
     {        
         static void Main(string[] args)
         {
+            /*
             bool isPaid = false;
             string input;
             //FileOperations.ReadProductsFromFile("Product.txt");
@@ -65,7 +66,7 @@ namespace Point_of_Sale
                 input = Console.ReadLine();
             }while (input.ToLower() == "y");
 
-            //FileOperations.SaveProductsToFile("Product.txt");
+            //FileOperations.SaveProductsToFile("Product.txt"); */
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿
 using Point_of_Sale.ErrorLogging;
 
-
-
+/*
 namespace Point_of_Sale
 {
     internal class FileOperations
@@ -64,4 +63,4 @@ namespace Point_of_Sale
             }
         }
     }
-}
+}*/
