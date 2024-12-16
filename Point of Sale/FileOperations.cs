@@ -1,4 +1,4 @@
-﻿using Point_of_Sale.Banking;
+﻿
 using Point_of_Sale.ErrorLogging;
 
 
@@ -7,8 +7,7 @@ namespace Point_of_Sale
 {
     internal class FileOperations
     {
-
-        
+        //Save Product Data to File
         public static void SaveProductsToFile(string path)
         {            
             try
@@ -30,6 +29,8 @@ namespace Point_of_Sale
             }
         }
 
+
+        //Read Products from file and save to Object
         public static void ReadProductsFromFile(string path)
         {
             try
@@ -59,7 +60,7 @@ namespace Point_of_Sale
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex.Message);
+                Logger.LogError(ex);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Point_of_Sale
         {
             bool isPaid = false;
             string input;
-            FileOperations.ReadProductsFromFile("Product.txt");
+            //FileOperations.ReadProductsFromFile("Product.txt");
             do
             {
                 try
@@ -58,14 +58,14 @@ namespace Point_of_Sale
                 catch(Exception ex)
                 {
                     Console.WriteLine("Transaction Declined!");
-                    Logger.LogError(ex.Message);
+                    Logger.LogError(ex);
                     isPaid = false;
                 }
                 Console.WriteLine("Would you like to continue? (y/n)");               
                 input = Console.ReadLine();
             }while (input.ToLower() == "y");
 
-            FileOperations.SaveProductsToFile("Product.txt");
+            //FileOperations.SaveProductsToFile("Product.txt");
         }
     }
 }

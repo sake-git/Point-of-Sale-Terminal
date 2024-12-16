@@ -5,11 +5,25 @@ namespace Point_of_Sale.ErrorLogging
     internal static class Logger
     {
         static string logFilePath = "log.txt";
-        public static void LogError(string message)
+
+        //Exception logging
+        public static void LogError(Exception ex) //Log exception
         {
             using(StreamWriter sw = new StreamWriter(logFilePath, true))
             {
-                sw.WriteLine($"Exception occured at {new DateTime()} : {message}");
+                Console.WriteLine("***********************************************************");
+                sw.WriteLine($"Exception occured at {DateTime.Now} : {ex.Message}");
+                sw.WriteLine($"Details: {ex.StackTrace}");
+                Console.WriteLine("***********************************************************");
+            }
+        }
+
+        //Message log
+        public static void LogError(string message) //Log Error/Message
+        {
+            using (StreamWriter sw = new StreamWriter(logFilePath, true))
+            {
+                sw.WriteLine($"Error occured at {DateTime.Now} : {message}");                
             }
         }
     }
