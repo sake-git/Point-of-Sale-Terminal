@@ -13,17 +13,58 @@ namespace Point_of_Sale
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcome to Mom and Pop's grocery store");
+            Order order = new Order();
+            Console.WriteLine();
+            
+            do
+            {
+                Console.WriteLine("Here is a list of all our products:");
+                Product.DisplayAllProducts();
+
+
+                int productIndex = 0;
+                bool isValid = false;
+                do
+                {
+                    productIndex = GetNumber("Please choose the desired product");
+                    if (productIndex >= Product.Products.Count)
+                    {
+                        Console.WriteLine("Invalid product index!");
+                        Logger.LogError("Invalid product index!");
+                    }
+                    else
+                    {
+                        isValid = true;
+                    }
+                } while (!isValid);
+
+
+                Product product = Product.GetProduct(productIndex - 1);
+
+                int quantity = GetNumber("Please enter desired quatity");
+
+                OrderLine orderLineObject = new OrderLine(product, quantity);
+                order.AddItemToOrder(orderLineObject);
+
+                Console.WriteLine("Would you like to purchase more items?(y/n)");
+
+            } while (Console.ReadLine().ToLower() == "y");
+
+            order.CalculateTotal();
+
+            order.DisplayBill();
+
+            double amount = order.Total;
+            Console.WriteLine($"Total amount due: {amount}");
 
             bool isPaid = false;
-            string input;
+            string input = "";
             //FileOperations.ReadProductsFromFile("Product.txt");
             do
             {
                 try
                 {
-                    Console.WriteLine("Enter Amount");
-                    double amount = double.Parse(Console.ReadLine());
-
                     Console.WriteLine("How would you like to pay today?");
                     foreach (string name in Enum.GetNames(typeof(paymentMethod)))
                     {
@@ -48,7 +89,6 @@ namespace Point_of_Sale
 
                         default:
                             throw new InvalidDataException("Invalid Payment Method!");
-                            break;
                     }
 
                     isPaid = true;
@@ -60,12 +100,49 @@ namespace Point_of_Sale
                     Console.WriteLine("Transaction Declined!");
                     Logger.LogError(ex);
                     isPaid = false;
+                    Console.WriteLine("Would you like to choose another payment method?(y/n)");
+                    input = Console.ReadLine();
                 }
-                Console.WriteLine("Would you like to continue? (y/n)");
-                input = Console.ReadLine();
+                
             } while (input.ToLower() == "y");
 
             //FileOperations.SaveProductsToFile("Product.txt"); 
         }
+
+        public static int GetNumber(string message)
+        {
+            bool isValid = false;
+            int number = 0;
+            do
+            {
+                Console.WriteLine(message);
+                try
+                {
+                    number = Convert.ToInt32(Console.ReadLine());
+                    if (number > 0)
+                    {
+                        isValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Number!");
+                        Logger.LogError("Invalid Number!");
+                    }
+
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Invalid number. Try again");
+                    Logger.LogError(ex);
+                }
+            } while (!isValid);
+
+            return number;
+        }
+
+
+
+
+
     }
 }

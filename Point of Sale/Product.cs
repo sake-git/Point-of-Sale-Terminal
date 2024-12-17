@@ -35,6 +35,12 @@ namespace Point_of_Sale
             new Product("Muffin", "Bakery", "Cost each", 2.29),
             new Product("Doughnut", "Bakery", "Cost each", 2.29),
         };
+
+        public static Product GetProduct(int index)
+        {
+            return Products[index];
+        }
+
         public static string DisplayProduct(int index) // made static to access the list without having to create a new Product instance
         {
             if (index >= 0 && index < Products.Count)
@@ -47,16 +53,16 @@ namespace Point_of_Sale
                 throw new Exception("Invalid product selection");
             }
         }
-        public static string DisplayAllProducts() // made static to access the list without having to create a new Product instance
+        public static void DisplayAllProducts() // made static to access the list without having to create a new Product instance
         {
             string productList = "";
             int number = 1;
             foreach (var product in Products)
-            {
-                productList = productList + $"{number, -5}\t{product.Name,-15}\t{product.Category,-15}\t{product.Description,-15}\t${product.Price:F2}\n";
+            { 
+                Console.WriteLine($"{number,-5}\t{product.Name,-15}\t{product.Category,-15}\t{product.Description,-15}\t${product.Price:F2}");
                 number++;
             }
-            return productList;
+            
         }
     }
 }
