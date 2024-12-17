@@ -11,9 +11,9 @@ namespace Point_of_Sale
         // Properties
         public List<OrderLine> OrderList { get; set; }
         public static double TaxRate = 0.06;
-        private double SalesTaxValue { get; set; }
-        private double SubTotalValue { get; set; }
-        private double Total { get; set; }
+        public double SalesTaxValue { get; set; }
+        public double SubTotalValue { get; set; }
+        public double Total { get; set; }
 
         //Constructor 
         public Order()
@@ -37,7 +37,7 @@ namespace Point_of_Sale
                 SubTotalValue += orderline.OrderLinePrice;
             }
 
-            SalesTaxValue = TaxRate * SubTotalValue;
+            SalesTaxValue = Math.Round(TaxRate * SubTotalValue , 2);
 
             Total = SalesTaxValue + SubTotalValue;
 
@@ -47,19 +47,18 @@ namespace Point_of_Sale
         // Make Bill looks nicer to present
         public void DisplayBill()
         {
-            Console.WriteLine("Bill:");
-
+            
+            Console.WriteLine("\nBill:");
+            Console.WriteLine("{0,-15} {1,-15} {2,-10} {3,-10}" , "Item", "Unit Price" , "Quatity" , "SubTotal");
             foreach (OrderLine orderLine in OrderList)
             {
-                Console.WriteLine($"{orderLine.Item.Name}\t" +
-                    $"{orderLine.Item.Price}\t" +
-                    $"{orderLine.Quantity}\t" +
-                    $"{orderLine.OrderLinePrice}");
-            }
 
-            Console.WriteLine($"Subtotal Value: {SubTotalValue}");
-            Console.WriteLine($"Sales Tax Value: {SalesTaxValue}");
-            Console.WriteLine($"Total: {Total}");
+                Console.WriteLine("{0,-15} {1,-15} {2,-10} {3,-10}",$"{orderLine.Item.Name}", $"{orderLine.Item.Price:c}", $"{orderLine.Quantity}" , $"{orderLine.OrderLinePrice:c}");
+            }
+            Console.WriteLine()
+            Console.WriteLine($"Subtotal Value: {SubTotalValue:C}");
+            Console.WriteLine($"Sales Tax Value: {SalesTaxValue:C}");
+            Console.WriteLine($"Total: {Total:C}");
         }
     }
 }
