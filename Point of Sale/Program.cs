@@ -1,5 +1,4 @@
-﻿
-using Point_of_Sale.Banking;
+﻿/*using Point_of_Sale.Banking;
 using Point_of_Sale.ErrorLogging;
 
 namespace Point_of_Sale
@@ -14,7 +13,7 @@ namespace Point_of_Sale
     {        
         static void Main(string[] args)
         {
-            /*
+            
             bool isPaid = false;
             string input;
             //FileOperations.ReadProductsFromFile("Product.txt");
