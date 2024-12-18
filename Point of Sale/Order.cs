@@ -47,18 +47,26 @@ namespace Point_of_Sale
         // Make Bill looks nicer to present
         public void DisplayBill()
         {
-            
-            Console.WriteLine("\nBill:");
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("\n**************************************************");
+            Console.WriteLine("\t\t\tBill");
+            Console.WriteLine("**************************************************");
             Console.WriteLine("{0,-15} {1,-15} {2,-10} {3,-10}" , "Item", "Unit Price" , "Quatity" , "SubTotal");
             foreach (OrderLine orderLine in OrderList)
             {
 
                 Console.WriteLine("{0,-15} {1,-15} {2,-10} {3,-10}",$"{orderLine.Item.Name}", $"{orderLine.Item.Price:c}", $"{orderLine.Quantity}" , $"{orderLine.OrderLinePrice:c}");
             }
-            Console.WriteLine()
+            Console.WriteLine("**************************************************");
             Console.WriteLine($"Subtotal Value: {SubTotalValue:C}");
             Console.WriteLine($"Sales Tax Value: {SalesTaxValue:C}");
             Console.WriteLine($"Total: {Total:C}");
+            Console.WriteLine("**************************************************\n");
+
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

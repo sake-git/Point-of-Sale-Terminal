@@ -1,14 +1,14 @@
 ﻿
 using Point_of_Sale.ErrorLogging;
 
-/*
+
 namespace Point_of_Sale
 {
     internal class FileOperations
     {
         //Save Product Data to File
         public static void SaveProductsToFile(string path)
-        {            
+        {
             try
             {
                 FileInfo fileInfo = new FileInfo(path);
@@ -52,7 +52,7 @@ namespace Point_of_Sale
                         }
                         else
                         {
-                            Logger.LogError($"Couldn't Add Product: {textLine}");            
+                            Logger.LogError($"Couldn't Add Product: {textLine}");
                         }
                     }
                 }
@@ -63,4 +63,4 @@ namespace Point_of_Sale
             }
         }
     }
-}*/
+}
