@@ -11,10 +11,10 @@ namespace Point_of_Sale.ErrorLogging
         {
             using(StreamWriter sw = new StreamWriter(logFilePath, true))
             {
-                Console.WriteLine("***********************************************************");
+                sw.WriteLine("***********************************************************");
                 sw.WriteLine($"Exception occured at {DateTime.Now} : {ex.Message}");
                 sw.WriteLine($"Details: {ex.StackTrace}");
-                Console.WriteLine("***********************************************************");
+                sw.WriteLine("***********************************************************");
             }
         }
 
