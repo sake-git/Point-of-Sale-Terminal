@@ -13,14 +13,23 @@ namespace Point_of_Sale
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Mom and Pop's grocery store");
+            Console.WriteLine("\t\tWelcome to Mom and Pop's grocery store");
+            
             Order order = new Order();
             Console.WriteLine();
             
             do
             {
-                Console.WriteLine("Here is a list of all our products:");
+                //FileOperations.SaveProductsToFile("Product.txt");
+                if (Product.Products.Count == 0)
+                {
+                    FileOperations.ReadProductsFromFile("Product.txt");
+                }
+                Console.WriteLine("***************************************************************");
+                Console.WriteLine("\t\tHere is a list of all our products:");
+                Console.WriteLine("***************************************************************");
                 Product.DisplayAllProducts();
+                Console.WriteLine("***************************************************************");
 
 
                 int productIndex = 0;
@@ -56,7 +65,7 @@ namespace Point_of_Sale
             order.DisplayBill();
 
             double amount = order.Total;
-            Console.WriteLine($"Total amount due: {amount}");
+            Console.WriteLine($"Total amount due: {amount:c}");
 
             bool isPaid = false;
             string input = "";
@@ -65,12 +74,12 @@ namespace Point_of_Sale
             {
                 try
                 {
-                    Console.WriteLine("How would you like to pay today?");
+                    Console.WriteLine("\nHow would you like to pay today?");
                     foreach (string name in Enum.GetNames(typeof(paymentMethod)))
                     {
                         Console.WriteLine($"{(int)Enum.Parse(typeof(paymentMethod), name)}. {name}");
                     }
-                    // Console.WriteLine("\n1. Cash \n2. Check \n3. Credit Card");
+                    Console.WriteLine("**************************************************");
                     string method = Console.ReadLine();
                     paymentMethod enumvalue;
                     Enum.TryParse(method, out enumvalue);
@@ -92,15 +101,20 @@ namespace Point_of_Sale
                     }
 
                     isPaid = true;
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Payment Accepted!");
                     Console.WriteLine(message);
+                    Console.ForegroundColor= ConsoleColor.Gray;
+                    input = "";
                 }
                 catch (Exception ex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Transaction Declined!");
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     Logger.LogError(ex);
                     isPaid = false;
-                    Console.WriteLine("Would you like to choose another payment method?(y/n)");
+                    Console.WriteLine("\nWould you like to choose another payment method?(y/n)");
                     input = Console.ReadLine();
                 }
                 

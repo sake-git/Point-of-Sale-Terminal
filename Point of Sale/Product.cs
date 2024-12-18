@@ -55,6 +55,8 @@ namespace Point_of_Sale
         }
         public static void DisplayAllProducts() // made static to access the list without having to create a new Product instance
         {
+            Console.WriteLine("{0 , -5} {1, -15} {2, -15} {3, -15} {4 ,-5}" , "Sr. No." , "Product Name" , "Category" , "Description" , "Price");
+
             string productList = "";
             int number = 1;
             foreach (var product in Products)

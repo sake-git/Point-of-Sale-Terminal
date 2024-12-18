@@ -10,7 +10,7 @@
             if (amount >= pay)
             {
                 // sufficient amount to cover payment
-                return $"${(amount - pay).ToString()} returned"; //If yes, make payment
+                return $"${Math.Round((amount - pay) , 2).ToString()} returned"; //If yes, make payment
             }
             else
             {   // Decline payment
