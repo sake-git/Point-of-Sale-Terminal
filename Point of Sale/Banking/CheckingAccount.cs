@@ -52,7 +52,7 @@
             {    
                 //Sufficient balance available, Make payment
                 Balance -= amount;
-                return $"$ {amount} paid with check for Account {string.Concat(["****", AccountNumber.Substring(8)])}";
+                return $"$ {Math.Round(amount, 2)} paid with check for Account {string.Concat(["****", AccountNumber.Substring(8)])}";
             }
             else
             {   
