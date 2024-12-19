@@ -37,7 +37,7 @@ namespace Point_of_Sale
                 do
                 {
                     productIndex = GetNumber("Please choose the desired product");
-                    if (productIndex >= Product.Products.Count)
+                    if (productIndex > Product.Products.Count)
                     {
                         Console.WriteLine("Invalid product index!");
                         Logger.LogError("Invalid product index!");
