@@ -53,7 +53,7 @@
             {
                 //Sufficient balance available, Make payment
                 CreditLimit -= amount;
-                return $"$ {amount} paid with Credit card {string.Concat(["****", CardNumber.Substring(12)])}";
+                return $"$ {Math.Round(amount , 2)} paid with Credit card {string.Concat(["****", CardNumber.Substring(12)])}";
             }
             else
             {
