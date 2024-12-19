@@ -38,7 +38,7 @@
                 throw new InvalidDataException("Invalid Date Format");
             }
 
-            if (this.cvv == cvv || this.expiryDate == expiryDate || this.expiryDate >= new DateOnly())
+            if (this.cvv == cvv && this.expiryDate == expirationDate && this.expiryDate >= DateOnly.FromDateTime(DateTime.Now))
             {
                 return true;
             }
